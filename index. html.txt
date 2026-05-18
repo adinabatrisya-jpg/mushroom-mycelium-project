@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application of Derivatives: Mycelium Growth Rate</title>
+    <!-- Tailwind CSS for modern, responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for smooth animations and graphing -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome for clean icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
+
+    <!-- Header Section -->
+    <header class="bg-emerald-800 text-white shadow-md py-6 px-4 sm:px-8">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <span class="bg-emerald-600 text-xs font-bold uppercase px-2.5 py-1 rounded-full tracking-wider">SFA: Agrotech Module</span>
+                <h1 class="text-2xl sm:text-3xl font-bold mt-2">Bio-Calculus Interactive Tool</h1>
+                <p class="text-emerald-100 text-sm mt-1">Modeling *Pleurotus ostreatus* (Grey Oyster Mushroom) Growth Kinetics in Malaysia</p>
+            </div>
+            <div class="text-right md:border-l md:border-emerald-700 md:pl-6">
+                <p class="text-xs text-emerald-200 uppercase tracking-widest">Scenario Location</p>
+                <p class="font-semibold text-sm">Controlled Agro-House, Selangor/Kelantan</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl w-full mx-auto p-4 sm:p-8 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Column: Bioscience Context & Mathematical Formulation -->
+        <div class="lg:col-span-5 flex flex-col gap-6">
+            
+            <!-- Bioscience Problem -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <h2 class="text-lg font-bold text-emerald-900 flex items-center gap-2 mb-3">
+                    <i class="fa-solid font-smies fa-bacteria text-emerald-600"></i> The Bioscience Problem
+                </h2>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    In Malaysian agro-industry operations, <strong>Grey Oyster Mushrooms</strong> (*Pleurotus ostreatus*) are widely cultivated due to high local demand. Maximizing farm turnover requires precise monitoring of the initial colonization phase—the vegetative growth of <strong>mycelium</strong> across agricultural substrate blocks (typically formulated with rubberwood sawdust, rice bran, and agricultural lime). 
+                </p>
+                <p class="text-sm text-slate-600 leading-relaxed mt-2">
+                    Using a standard <strong>Logistic Growth Model</strong>, we map the total colony radius ($f(x)$ in mm) over a 14-day incubation cycle. By computing the <strong>first derivative $f'(x)$</strong>, agrotech practitioners can pinpoint the exact moment of the <em>maximal growth rate</em> to optimize climate control adjustments (maintaining humidity at 85-90% and temperature at 28°C).
+                </p>
+            </div>
+
+            <!-- Mathematical Modeling -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2 mb-4">
+                    <i class="fa-solid fa-calculator text-emerald-600"></i> Mathematical Formulation
+                </h2>
+                
+                <!-- Function f(x) -->
+                <div class="mb-4 p-3 bg-slate-50 rounded-xl border border-slate-200">
+                    <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Population/Colony Size Function, $f(x)$</p>
+                    <p class="text-lg font-mono text-emerald-800 font-semibold my-1">
+                        f(x) = L / (1 + e<sup>-k(x - x₀)</sup>)
+                    </p>
+                    <p class="text-xs text-slate-600 mt-1">
+                        Where carrying capacity <span class="font-semibold">L = 80 mm</span> (max petri/bag radius), growth rate coefficient <span class="font-semibold">k = 0.65</span>, and midpoint day <span class="font-semibold">x₀ = 6 days</span>.
+                    </p>
+                </div>
+
+                <!-- Derivative f'(x) -->
+                <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-100">
+                    <p class="text-xs font-semibold text-emerald-700 uppercase tracking-wider">Instantaneous Growth Rate (Derivative), $f'(x)$</p>
+                    <p class="text-lg font-mono text-emerald-900 font-bold my-1">
+                        f'(x) = k · f(x) · (1 - f(x)/L)
+                    </p>
+                    <p class="text-xs text-slate-700 mt-1">
+                        Calculates the instantaneous radial expansion speed in <span class="font-semibold">mm/day</span> at any given hour or day $x$.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Realistic Data Attributions -->
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 text-xs text-slate-500">
+                <p class="font-semibold text-slate-700 mb-1"><i class="fa-solid fa-bookmark text-amber-500 mr-1"></i> Empirical Data Context:</p>
+                <p>Growth parameters reflect benchmarks extracted from Malaysian agrotech studies on local agricultural waste substrates:</p>
+                <ul class="list-disc list-inside mt-1 space-y-1">
+                    <li><em>Malaysian Journal of Microbiology (MJM)</em> - "Growth performance of Pleurotus ostreatus on various agro-wastes"</li>
+                    <li><em>MARDI Research Journal</em> - "Optimization of substrate formulations for local commercial mushroom production"</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Right Column: Interactive Graph & Live Calculator Interface -->
+        <div class="lg:col-span-7 flex flex-col gap-6">
+            
+            <!-- Graph Wrapper -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h2 class="text-lg font-bold text-slate-900">Interactive Growth Curve</h2>
+                            <p class="text-xs text-slate-500">Click anywhere on the graph line to calculate the exact derivative at that point.</p>
+                        </div>
+                        <span class="bg-blue-50 text-blue-700 text-xs font-medium px-2.5 py-1 rounded-md border border-blue-100 flex items-center gap-1">
+                            <i class="fa-solid fa-mouse-pointer animate-pulse"></i> Clickable Plot
+                        </span>
+                    </div>
+                    
+                    <!-- Chart canvas container -->
+                    <div class="relative w-full h-[320px] sm:h-[380px] mt-2">
+                        <canvas id="myceliumChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Result Card -->
+            <div id="resultCard" class="bg-gradient-to-br from-slate-800 to-slate-900 text-white p-6 rounded-2xl shadow-md transition-all duration-300 transform scale-100">
+                <div class="flex items-center justify-between border-b border-slate-700 pb-3 mb-4">
+                    <span class="text-xs font-bold tracking-widest uppercase text-emerald-400">
+                        <i class="fa-solid fa-bolt mr-1"></i> Real-time Derivative Calculator Output
+                    </span>
+                    <span id="selectedDayBadge" class="bg-slate-700 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                        Day 6.0 (Midpoint)
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <!-- Outputs -->
+                        <div class="mb-3">
+                            <p class="text-xs text-slate-400">Colony Radius $f(x)$:</p>
+                            <p class="text-2xl font-bold font-mono text-white"><span id="outRadius">40.00</span> <span class="text-sm font-normal text-slate-400">mm</span></p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-400">Instantaneous Growth Rate $f'(x)$:</p>
+                            <p class="text-3xl font-extrabold font-mono text-emerald-400"><span id="outDerivative">13.00</span> <span class="text-sm font-semibold text-white">mm/day</span></p>
+                        </div>
+                    </div>
+                    
+                    <!-- Layman's Explanation Panel -->
+                    <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700">
+                        <p class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-1">
+                            <i class="fa-solid fa-comment-dots mr-1"></i> Layman's Breakdown
+                        </p>
+                        <p id="laymanText" class="text-xs text-slate-200 leading-relaxed">
+                            At Day 6.0, the mycelium network is growing at its peak speed of 13.00 mm every single day. The substrate block is experiencing rapid white colonization, making optimal temperature maintenance absolutely critical right now!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-100 border-t border-slate-200 py-4 px-6 text-center text-xs text-slate-500">
+        Developed for Agrotech Educational Demonstrations &copy; 2026. Powered by Chart.js & Calculus principles.
+    </footer>
+
+    <!-- Chart Configuration and Dynamic Interaction Script -->
+    <script>
+        // Mathematical Constants for Logistic Model
+        const L = 80;    // Carrying Capacity (Max radius in mm)
+        const k = 0.65;  // Growth Rate constant
+        const x0 = 6;    // Midpoint day of maximum growth rate
+
+        // Logistic Function f(x)
+        function f(x) {
+            return L / (1 + Math.exp(-k * (x - x0)));
+        }
+
+        // Derivative Function f'(x)
+        function f_prime(x) {
+            const fx = f(x);
+            return k * fx * (1 - (fx / L));
+        }
+
+        // Generate dense data points for seamless tracking
+        const labels = [];
+        const growthData = [];
+        const steps = 140; // 0 to 14 days broken into steps of 0.1 days
+        
+        for (let i = 0; i <= steps; i++) {
+            const day = i / 10;
+            labels.push(day.toFixed(1));
+            growthData.push(f(day));
+        }
+
+        // Initialize Chart.js configuration
+        const ctx = document.getElementById('myceliumChart').getContext('2d');
+        
+        // Gradient fill for area under the curve
+        const chartGradient = ctx.createLinearGradient(0, 0, 0, 300);
+        chartGradient.addColorStop(0, 'rgba(16, 185, 129, 0.4)');
+        chartGradient.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
+
+        const myceliumChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Mycelium Colony Radius f(x) (mm)',
+                    data: growthData,
+                    borderColor: '#059669', // Emerald 600
+                    borderWidth: 3,
+                    pointRadius: 0, // Hidden until hover/click
+                    pointHoverRadius: 6,
+                    pointBackgroundColor: '#dc2626', // Red 600 pointer indicator
+                    pointHoverBorderColor: '#ffffff',
+                    pointHoverBorderWidth: 2,
+                    fill: true,
+                    backgroundColor: chartGradient,
+                    tension: 0.2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { font: { weight: '500', size: 12 } }
+                    },
+                    tooltip: {
+                        enabled: true,
+                        callbacks: {
+                            label: function(context) {
+                                return ` Radius: ${context.parsed.y.toFixed(2)} mm`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Incubation Period (Days)', font: { weight: '600' } },
+                        grid: { display: false }
+                    },
+                    y: {
+                        title: { display: true, text: 'Colony Expansion (mm)', font: { weight: '600' } },
+                        min: 0,
+                        max: 90,
+                        ticks: { stepSize: 10 }
+                    }
+                },
+                // Trigger action when the user clicks anywhere on the graph area
+                onClick: (e, elements) => {
+                    if (elements.length > 0) {
+                        const index = elements[0].index;
+                        const selectedDay = parseFloat(labels[index]);
+                        updateMetrics(selectedDay);
+                        
+                        // Highlight the selected point visually
+                        myceliumChart.setActiveElements([{ datasetIndex: 0, index: index }]);
+                        myceliumChart.update();
+                    }
+                },
+                animation: {
+                    duration: 1500,
+                    easing: 'easeOutQuart'
+                }
+            }
+        });
+
+        // Function to process values and update the DOM elements dynamically
+        function updateMetrics(day) {
+            const currentRadius = f(day);
+            const currentDerivative = f_prime(day);
+
+            // Update numerical text contents
+            document.getElementById('selectedDayBadge').innerText = `Day ${day.toFixed(1)}`;
+            document.getElementById('outRadius').innerText = currentRadius.toFixed(2);
+            document.getElementById('outDerivative').innerText = currentDerivative.toFixed(2);
+
+            // Generate contextual layman descriptions based on the calculated values
+            let description = "";
+            if (day < 3.5) {
+                description = `The growth is in its early lag phase. The mycelium is adapting to the rubberwood sawdust substrate block. It expands at a gentle speed of ${currentDerivative.toFixed(2)} mm/day.`;
+            } else if (day >= 3.5 && day <= 8.5) {
+                description = `The growth is in its optimal log phase. The derivative value shows a highly aggressive expansion speed of ${currentDerivative.toFixed(2)} mm/day. Keep the farm humidity up to standard right now!`;
+            } else {
+                description = `The growth rate is declining (deceleration phase). The mycelium has almost entirely bound the substrate pouch block, meaning nutrients are depleting, and the radius is reaching its structural capacity limit.`;
+            }
+
+            document.getElementById('laymanText').innerText = description;
+
+            // Flash effect for interactivity confirmation
+            const card = document.getElementById('resultCard');
+            card.classList.remove('scale-100');
+            card.classList.add('scale-[1.01]', 'border-emerald-500');
+            setTimeout(() => {
+                card.classList.remove('scale-[1.01]', 'border-emerald-500');
+                card.classList.add('scale-100');
+            }, 150);
+        }
+
+        // Set default values matching initial midpoint loading view state
+        window.onload = () => {
+            updateMetrics(6.0);
+        };
+    </script>
+</body>
+</html>
